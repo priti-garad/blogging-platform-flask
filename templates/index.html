@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blogging Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            color: #333;
+        }
+        header {
+            background: #263b80;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+        nav {
+            background: #172554;
+            padding: 15px;
+            text-align: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 12px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        .post {
+            background: white;
+            padding: 22px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px #ddd;
+        }
+        .message {
+            color: green;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Blogging Platform</h1>
+    <p>Share your thoughts with the world!</p>
+</header>
+
+<nav>
+    <a href="/">Home</a>
+    {% if session.username %}
+        <a href="/create">Create Blog</a>
+        <a href="/logout">Logout</a>
+        <span>Welcome, {{ session.username }}</span>
+    {% else %}
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+    {% endif %}
+</nav>
+
+<div class="container">
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <h2>Latest Blog Posts</h2>
+
+    {% for post in posts %}
+        <div class="post">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            <small>Written by: {{ post.author }}</small>
+        </div>
+    {% else %}
+        <div class="post">
+            <h3>No blog posts yet!</h3>
+            <p>Register and create your first blog post.</p>
+        </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
